@@ -1,0 +1,12 @@
+{
+  "name": "claroty-enforcement-readiness",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Concept demo: estimating how many legitimate OT conversations a zone policy would block because the learning window never saw them.",
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "test": "node --test test/readiness.test.mjs",
+    "coverage": "node scripts/coverage.mjs 20"
+  }
+}

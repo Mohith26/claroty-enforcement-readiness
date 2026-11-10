@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enforcement Readiness | Claroty xDome (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topnav">
+  <nav class="mainnav">
+    <a>Home</a><a>Devices</a><a>Risk</a><a>Alerts &amp; Threats</a><a class="active">Network</a><a>Settings</a>
+  </nav>
+  <div class="navicons">
+    <span class="ic rocket"><i class="ti ti-rocket"></i><b class="pct">70%</b></span>
+    <span class="ic"><i class="ti ti-device-desktop-search"></i></span>
+    <span class="ic"><i class="ti ti-lifebuoy"></i></span>
+    <span class="ic"><i class="ti ti-search"></i></span>
+    <span class="ic"><i class="ti ti-speakerphone"></i><b class="nine">9+</b></span>
+    <span class="ic"><i class="ti ti-filter-2"></i></span>
+    <span class="avatar"><svg viewBox="0 0 32 32" width="32" height="32"><circle cx="16" cy="16" r="16" fill="#fff"/><g fill="none" stroke="#e1218b" stroke-width="2.6" stroke-linecap="round"><path d="M21.6 11.1a7.4 7.4 0 1 0 0 9.8"/><path d="M18.9 13.4a3.8 3.8 0 1 0 0 5.2"/></g><circle cx="23.2" cy="16" r="1.6" fill="#e1218b"/></svg></span>
+    <div class="user"><b>Jordan Ellis</b><span>All 6 Sites</span></div>
+  </div>
+</header>
+<div class="crumbs">
+  <div class="trail"><a>Home</a><span>/</span><a>Network</a><span>/</span><a>Network Security Overview</a><span>/</span><a>ACL Enforcement</a><span>/</span><b>Enforcement Readiness</b></div>
+  <div class="crumbright"><span class="beta">BETA</span><i class="ti ti-help-circle helpic"></i></div>
+</div>
+
+<main class="page">
+  <div class="filters">
+    <div class="frow">
+      <button class="fbtn">Site Group <i class="ti ti-chevron-down"></i></button>
+      <button class="fbtn on">Site Name <i class="ti ti-chevron-down"></i></button>
+      <button class="fbtn">Source Zone <i class="ti ti-chevron-down"></i></button>
+      <button class="fbtn">Destination Zone <i class="ti ti-chevron-down"></i></button>
+      <button class="fbtn">Policy Source <i class="ti ti-chevron-down"></i></button>
+      <button class="fbtn">Impact <i class="ti ti-chevron-down"></i></button>
+      <button class="fbtn" id="recFilterBtn">Recommendation <i class="ti ti-chevron-down"></i></button>
+      <a class="reset" id="resetFilters">Reset Filters <i class="ti ti-reload"></i></a>
+    </div>
+    <div class="fright">
+      <i class="ti ti-info-circle muted"></i>
+      <span class="scope"><i class="ti ti-calendar-event"></i> Learning Window: <b id="windowLbl"></b></span>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="leftcol">
+      <div class="card stat">
+        <i class="ti ti-info-circle cinfo"></i>
+        <div class="big" id="totPairs"></div>
+        <div class="lbl">Zone Pairs with Policies</div>
+      </div>
+      <div class="card gaugecard">
+        <span class="gbtn"><i class="ti ti-chart-line"></i></span>
+        <svg id="gauge" viewBox="0 0 220 200" width="220" height="200"></svg>
+      </div>
+      <div class="card subnav">
+        <div class="sh">ACL Enforcement</div>
+        <a>Enforcement Overview</a>
+        <a>Enforcement by Model</a>
+        <a class="sel">Enforcement Readiness <span class="newtag"><i class="ti ti-sparkles"></i> New</span></a>
+        <div class="sh">VLAN Segmentation</div>
+        <a>Segmentation Overview</a>
+      </div>
+      <div class="card method">
+        <div class="mh"><i class="ti ti-flask"></i> How readiness is estimated</div>
+        <p>Every learning day is a sample. Conversations seen on only one or two days reveal how many legitimate conversations have not shown up yet (Chao2 estimator), and how many will appear in the next <b class="hzn"></b> days (Shen-Chao-Lin extrapolation). Ranges come from a parametric bootstrap and are backtested on this site's own history.</p>
+      </div>
+    </aside>
+
+    <section class="maincol">
+      <div class="kpis">
+        <div class="card kpi">
+          <i class="ti ti-info-circle cinfo"></i>
+          <div class="kh"><span class="kic"><i class="ti ti-shield-check"></i></span>Ready to Enforce</div>
+          <div class="kgrid"><span>Zone Pairs</span><span>Devices</span><b id="kReadyPairs"></b><b id="kReadyDev"></b></div>
+        </div>
+        <div class="card kpi">
+          <i class="ti ti-info-circle cinfo"></i>
+          <div class="kh"><span class="kic"><i class="ti ti-hourglass"></i></span>Not Ready Yet</div>
+          <div class="kgrid"><span>Zone Pairs</span><span>Devices</span><b id="kNotPairs"></b><b id="kNotDev"></b></div>
+        </div>
+        <div class="card kpi">
+          <i class="ti ti-info-circle cinfo"></i>
+          <div class="kh"><span class="kic"><i class="ti ti-shield-x"></i></span>Unseen Legit Conversations</div>
+          <div class="kgrid"><span>Next <span class="hzn"></span> Days</span><span>90% Range</span><b id="kUnseen"></b><b id="kRange" class="rng"></b></div>
+        </div>
+        <div class="card kpi">
+          <i class="ti ti-info-circle cinfo"></i>
+          <div class="kh"><span class="kic"><i class="ti ti-target-arrow"></i></span>Backtest Coverage</div>
+          <div class="kgrid"><span>Intervals Hit</span><span>Abs. Error</span><b id="kCov"></b><b id="kMae"></b></div>
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="card chartcard">
+          <div class="ch">
+            <div class="ct">Conversation Discovery Curve <i class="ti ti-info-circle muted"></i></div>
+            <div class="seg" id="hseg"><button data-h="7">7D</button><button data-h="14">14D</button><button data-h="30" class="on">30D</button></div>
+          </div>
+          <div class="cbody">
+            <div class="pairline" id="pairLine"></div>
+            <svg id="curve" viewBox="0 0 600 372" width="600" height="372"></svg>
+            <div class="legend" id="curveLegend">
+              <span><i class="lg solid"></i>Observed conversation types</span>
+              <span><i class="lg dash"></i>Expected (extrapolated)</span>
+              <span><i class="lg band"></i>90% prediction range</span>
+              <span><i class="lg dot"></i>Simulation truth</span>
+            </div>
+          </div>
+        </div>
+        <div class="card matrixcard">
+          <div class="ch"><div class="ct">Readiness Matrix <i class="ti ti-info-circle muted"></i></div><span class="kebab"><i class="ti ti-dots"></i></span></div>
+          <div class="cbody mbody"><div id="matrix"></div></div>
+          <div class="mlegend" id="mlegend"></div>
+        </div>
+      </div>
+
+      <div class="row3">
+        <div class="card detailcard">
+          <div class="ch"><div class="ct" id="detailTitle">Why This Recommendation</div><span class="kebab"><i class="ti ti-dots"></i></span></div>
+          <div class="cbody" id="detail"></div>
+        </div>
+        <div class="card btcard">
+          <div class="ch"><div class="ct">Estimator Backtest <i class="ti ti-info-circle muted"></i></div><span class="dl"><i class="ti ti-download"></i></span></div>
+          <div class="cbody">
+            <svg id="bt" viewBox="0 0 400 270" width="400" height="270"></svg>
+            <div class="btnote" id="btNote"></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+  <section class="full">
+      <div class="divider"></div>
+    <h2 class="sect"><i class="ti ti-topology-star-ring-3"></i><span>Zone Pair Readiness</span></h2>
+    <div class="showing">Showing: <b id="showCount"></b></div>
+    <div class="tbar">
+      <div class="sorted">Sorted By: <span class="chip" id="sortChip"></span></div>
+      <div class="tright">
+        <label class="search"><input id="search" placeholder="Search"><i class="ti ti-search"></i></label>
+        <button class="ebtn"><i class="ti ti-download"></i> Export</button>
+      </div>
+    </div>
+    <div class="tablewrap card">
+      <table id="tbl">
+        <thead><tr>
+          <th data-k="src">Source Zone</th>
+          <th data-k="dst">Destination Zone</th>
+            <th data-k="impact">Dest. Impact</th>
+          <th data-k="observed">Observed Conversations</th>
+          <th data-k="Q1">Seen Once/Twice</th>
+          <th data-k="est">Predicted Unseen <span class="hzl"></span></th>
+          <th data-k="daily">Daily Block Chance</th>
+          <th data-k="daysToReady">Ready In</th>
+          <th data-k="rec">Recommendation</th>
+          <th data-k="actual" title="Available only because the data is synthetic">Sim. Truth</th>
+            <th class="gear"><i class="ti ti-settings-filled"></i></th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <footer class="foot">Unofficial concept demo by Mohith Gajjela. Not affiliated with Claroty. Synthetic data (seeded generator in <code>scripts/generate.mjs</code>).</footer>
+  </section>
+</main>
+<a class="helpfab"><i class="ti ti-help-circle"></i> Help</a>
+<script type="module" src="app.js"></script>
+</body>
+</html>
